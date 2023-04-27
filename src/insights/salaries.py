@@ -8,7 +8,7 @@ def get_max_salary(path: str) -> int:
         [
             int(data_salary["max_salary"])
             for data_salary in path_reader_data
-            if data_salary["max_salary"] and int(data_salary["max_salary"]) > 0
+            if data_salary["max_salary"].isdigit()
         ]
     )
 
