@@ -25,19 +25,15 @@ def get_min_salary(path: str) -> int:
 
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
-    min_salary = job.get("min_salary", None)
-    max_salary = job.get("max_salary", None)
-
-    if min_salary is None or max_salary is None:
+    try:
+        min_salary = int(job.get("min_salary"))
+        max_salary = int(job.get("max_salary"))
+        salary = int(salary)
+        if min_salary > max_salary:
+            raise ValueError
+    except (TypeError, KeyError):
         raise ValueError
-
-    if not isinstance(min_salary, int) or not isinstance(max_salary, int):
-        raise ValueError
-
-    if int(min_salary) > int(max_salary):
-        raise ValueError
-
-    return int(min_salary) <= int(salary) <= int(max_salary)
+    return min_salary <= salary <= max_salary
 
 
 def filter_by_salary_range(
@@ -49,7 +45,7 @@ def filter_by_salary_range(
         try:
             if matches_salary_range(job, salary):
                 filtered_jobs.append(job)
-        except ValueError:
+        except (TypeError, ValueError):  # captura a exceção e continua
             pass
 
     return filtered_jobs
