@@ -25,14 +25,13 @@ def get_min_salary(path: str) -> int:
 
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
-
     min_salary = job.get("min_salary", None)
     max_salary = job.get("max_salary", None)
 
     if min_salary is None or max_salary is None:
         raise ValueError
 
-    if not isinstance(min_salary, (int)) or not isinstance(max_salary, (int)):
+    if not isinstance(min_salary, int) or not isinstance(max_salary, int):
         raise ValueError
 
     if int(min_salary) > int(max_salary):
@@ -44,14 +43,17 @@ def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
 def filter_by_salary_range(
     jobs: List[dict], salary: Union[str, int]
 ) -> List[Dict]:
-
-    valid_jobs = []
+    filtered_jobs = []
 
     for job in jobs:
         try:
             if matches_salary_range(job, salary):
-                valid_jobs.append(job)
+                filtered_jobs.append(job)
         except ValueError:
-            continue
+            pass
 
-    return valid_jobs
+    return filtered_jobs
+
+
+# me parece que de alguma forma esta verificação acima está errada e aceita
+# valor que não deveria no filter

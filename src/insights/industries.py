@@ -10,5 +10,4 @@ def get_unique_industries(path: str) -> List[str]:
 
 
 def filter_by_industry(jobs: List[Dict], industry: str) -> List[Dict]:
-
     return [type for type in jobs if type["industry"] == industry]
